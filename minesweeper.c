@@ -6,6 +6,7 @@
 #include "utils.h"
 
 
+
 int board_get_index(Board board, int row, int col){
     /// Returns the index of the cell at the given row and column
     return row * board.cols + col;
@@ -121,6 +122,8 @@ Board generate_random_board_with_safe_space(int rows, int cols, int num_mines, i
     free(spots);
     return board;
 }
+
+
 
 
 Game create_game(Board board, int rows, int cols, int num_mines){

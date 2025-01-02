@@ -19,8 +19,19 @@ all: $(TARGETS)
 minesweeper: minesweeper_cmdline_basic.o minesweeper.o utils.o
 	$(CC) $(FLAGS) -o $@ $^ -lm
 
-%.o: %.c minesweeper.h utils.h
+minesweeper_cmdline_basic.o: minesweeper_cmdline_basic.c minesweeper.h
 	$(CC) $(FLAGS) -c -o $@ $<
+
+minesweeper.o : minesweeper.c minesweeper.h utils.h
+	$(CC) $(FLAGS) -c -o $@ $<
+
+utils.o : utils.c utils.h
+	$(CC) $(FLAGS) -c -o $@ $<
+
+AC3.o : AC3.c AC3.h
+	$(CC) $(FLAGS) -c -o $@ $<
+
+
 
 .PHONY: clean all debug release
 clean:
