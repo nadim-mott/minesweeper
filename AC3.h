@@ -16,6 +16,6 @@ typedef struct {
     int vars[MAX_CONSTRAINT_VARS];
     int numVars;
     int (*constraint)(int[], int);
-} Constraint;
+} Constraint;  
 
 int AC3(Domain domains[], int numVars, Constraint constraints[], int numConstraints);

@@ -54,7 +54,7 @@ void print_game_state(Game game){
         printf("Mines: %d/%d\n ", game.num_mines_guessed, game.num_mines);
     }
     // Add spaces so that the coordinates line up with the columns
-    int log_10_rows = (board.rows == 0) ? 1 : log10(board.rows) + 1;
+    int log_10_rows = (board.rows == 0) ? 1 : log10(board.rows - 1) + 1;
     for (int i = 0; i < log_10_rows; i++){
         printf(" ");
     }
@@ -115,7 +115,7 @@ int main(int argc, char** argv){
         } else if (command == 'f'){
             flag_cell(&game, row, letter_to_column(col_char));
         } else {
-            fprintf(stderr, "Invalid command\n");
+            fprintf(stderr, "Invalid command [r,f] [row number] [col character]\n");
         }   
     }
     print_game_state(game);
