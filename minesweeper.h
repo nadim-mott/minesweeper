@@ -3,6 +3,7 @@
 #define BOMB_CHAR '*'
 #define FLAG_CHAR 'F'
 #define NOT_REVEALED_CHAR '#'
+#define CELL_MINE -1
 
 
 typedef enum status{lost, ongoing, won} Status;
@@ -23,6 +24,8 @@ typedef struct game {
     Cell* revealed;
     Status status;
 } Game;
+
+int board_get_index(Board board, int row, int col);
 
 char val_at_cell(Board board, int row, int col);
 

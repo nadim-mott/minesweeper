@@ -30,10 +30,10 @@ void add_mine(Board board, int row, int col){
     int num_rows = board.rows;
     int num_cols = board.cols;
     int index = board_get_index(board, row, col);
-    board.cells[index] = -1;
+    board.cells[index] = CELL_MINE;
     for (int r = max(0, row - 1); r <= min(num_rows - 1, row + 1);r ++){
         for (int c = max(0, col - 1); c <= min(num_cols - 1, col + 1); c++){
-            if (val_at_cell(board, r, c) != -1){
+            if (val_at_cell(board, r, c) != CELL_MINE){
                 board.cells[board_get_index(board, r, c)]++;
             }
         }
@@ -70,7 +70,7 @@ Board generate_random_board(int rows, int cols, int num_mines){
             row = random() % rows;
             col = random() % cols;
             index = row * cols + col;
-        } while (cells[index] == -1);
+        } while (cells[index] == CELL_MINE);
         add_mine(board, row, col);
     }
     return board;
@@ -154,7 +154,7 @@ int reveal(Game* game, int row, int col){
     game->revealed[index] = shown;
     int cell_value = val_at_cell(game->board, row, col);
     
-    if (cell_value == -1){
+    if (cell_value == CELL_MINE){
         game->status = lost;
     } else if (cell_value == 0){
         for (int r = max(0, row - 1); r <= min(game->board.rows - 1, row + 1); r++){
@@ -177,13 +177,13 @@ void flag_cell(Game* game, int row, int col){
     if (game->revealed[index] == flag){
         game->num_mines_guessed --;
         game->revealed[index] = not_shown;
-        if (game->board.cells[index] == -1){
+        if (game->board.cells[index] == CELL_MINE){
             game->num_mines_found--;
         }
     } else if (game->revealed[index] == not_shown) {
         game->num_mines_guessed ++;
         game->revealed[index] = flag;
-        if (game->board.cells[index] == -1){
+        if (game->board.cells[index] == CELL_MINE){
             game->num_mines_found++;
         }
     }
