@@ -1,6 +1,6 @@
-#define MAX_VARS 100
-#define MAX_DOMAIN 100
-#define MAX_CONSTRAINT_VARS 10
+#define MAX_VARS (26 * 26)
+#define MAX_DOMAIN 2
+#define MAX_CONSTRAINT_VARS 9
 
 typedef struct {
     int var1;

@@ -7,10 +7,10 @@ typedef struct {
     Constraint* constraints;
     int numVars;
     int numConstraints;
-} solver;
+} Solver;
 
-solver* create_solver(Game* game);
+Solver* create_solver(Game* game);
 
-void scan_game(solver* s);
+void scan_game(Solver* s);
 
-void add_constraint(solver* s, Constraint constraint);
+void add_constraint(Solver* s, Constraint constraint);

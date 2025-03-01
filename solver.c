@@ -2,11 +2,11 @@
 
 
 
-solver* create_solver(Game* game){
+Solver* create_solver(Game* game){
     Board board = game->board;
-    solver* solver = malloc(sizeof(solver));
+    Solver* solver = malloc(sizeof(solver));
     solver->domains = malloc(sizeof(Domain) * board.cols * board.rows);
-    solver->constraints = malloc(1);
+    solver->constraints = malloc(sizeof(Constraint) * board.cols * board.rows);
     solver->numVars = board.cols * board.rows;
     solver->numConstraints = 0;
     scan_game(solver);
@@ -14,7 +14,7 @@ solver* create_solver(Game* game){
 }
 
 
-void scan_game(solver* s){
+void scan_game(Solver* s){
     // Scans the current state of the board
     // Precondition: s is initialized
     Game* game = s->game;
@@ -25,12 +25,22 @@ void scan_game(solver* s){
         for (int col = 0; col < board.cols; col ++){
             int cell_index = board_get_index(board, row, col);
             Domain dom = {
-                .domain = {0, 1},
                 .size = 2
             };
+            dom.domain[0] = 0;
+            dom.domain[1] = 1;
             if (reveal_at_cell(*game, row, col) == shown){
-                dom.domain = {0};
+                dom.size = 1;
+
+            } else {
+                char cell_val = val_at_cell(game->board, row, col);
             }
         }
     }
+}
+
+void add_constraint(Solver* s, Constraint constraint){
+    s->constraints[s->numConstraints] = constraint;
+    s->numConstraints ++;
+
 }
