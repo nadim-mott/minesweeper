@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include "minesweeper.h"
+#include "solver.h"
 
 char* board_to_string(Board board){
     /// Converts the board to a string
@@ -101,6 +101,8 @@ int main(int argc, char** argv){
 
     Board board = generate_random_board_with_safe_space(rows, cols, num_mines, starting_row, starting_col);
     Game game = create_game(board, rows, cols, num_mines);
+    Solver* solver = create_solver(&game);
+    
     reveal(&game, starting_row, starting_col);
     while (game.status == ongoing){
         print_game_state(game);
@@ -114,10 +116,14 @@ int main(int argc, char** argv){
             reveal(&game, row, letter_to_column(col_char));
         } else if (command == 'f'){
             flag_cell(&game, row, letter_to_column(col_char));
+        } else if (command == 'h') {
+            scan_game(solver);
+            solve_game(solver);
         } else {
             fprintf(stderr, "Invalid command [r,f] [row number] [col character]\n");
         }   
     }
+    free_solver(solver);
     print_game_state(game);
     return 0;
 }

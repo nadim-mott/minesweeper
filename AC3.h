@@ -3,8 +3,8 @@
 #define MAX_CONSTRAINT_VARS 9
 
 typedef struct {
-    int var1;
-    int var2;
+    int vars[MAX_CONSTRAINT_VARS];
+    int numVars;
 } Arc;
 
 typedef struct {

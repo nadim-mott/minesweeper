@@ -28,19 +28,19 @@ void initializeQueue(Arc queue[], int *queueSize, int numVars) {
 
 int revise(Domain domains[], Arc arc, Constraint constraints[], int numConstraints) {
     int revised = 0;
-    for (int i = 0; i < domains[arc.var1].size; i++) {
-        int x = domains[arc.var1].domain[i];
+    for (int i = 0; i < domains[arc.vars[0]].size; i++) {
+        int x = domains[arc.vars[0]].domain[i];
         int consistent = 0;
-        for (int j = 0; j < domains[arc.var2].size; j++) {
-            int y = domains[arc.var2].domain[j];
+        for (int j = 0; j < domains[arc.vars[1]].size; j++) {
+            int y = domains[arc.vars[1]].domain[j];
             for (int k = 0; k < numConstraints; k++) {
                 int values[MAX_CONSTRAINT_VARS];
                 int foundVar1 = 0, foundVar2 = 0;
                 for (int l = 0; l < constraints[k].numVars; l++) {
-                    if (constraints[k].vars[l] == arc.var1) {
+                    if (constraints[k].vars[l] == arc.vars[0]) {
                         values[l] = x;
                         foundVar1 = 1;
-                    } else if (constraints[k].vars[l] == arc.var2) {
+                    } else if (constraints[k].vars[l] == arc.vars[1]) {
                         values[l] = y;
                         foundVar2 = 1;
                     } else {
@@ -55,10 +55,10 @@ int revise(Domain domains[], Arc arc, Constraint constraints[], int numConstrain
             if (consistent) break;
         }
         if (!consistent) {
-            for (int k = i; k < domains[arc.var1].size - 1; k++) {
-                domains[arc.var1].domain[k] = domains[arc.var1].domain[k + 1];
+            for (int k = i; k < domains[arc.vars[0]].size - 1; k++) {
+                domains[arc.vars[0]].domain[k] = domains[arc.vars[0]].domain[k + 1];
             }
-            domains[arc.var1].size--;
+            domains[arc.vars[0]].size--;
             i--;
             revised = 1;
         }
